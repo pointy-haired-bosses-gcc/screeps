@@ -19,6 +19,14 @@ module.exports.loop = function () {
         console.log('Spawning new harvester: ' + newName);
     }
 
+    var upgraders = _.sum(Game.creeps, (creep) => creep.memory.role == 'upgrader');
+    console.log('Upgraders: ' + upgraders);
+
+    if(upgraders < 3) {
+        var newName = Game.spawns['Spawn1'].createCreep([WORK,CARRY,MOVE], undefined, {role: 'upgrader'});
+        console.log('Spawning new upgrader: ' + newName);
+    }
+
     var tower = Game.getObjectById('TOWER_ID');
     if(tower) {
         var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
