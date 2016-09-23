@@ -49,7 +49,7 @@ module.exports.loop = function () {
         
         var harvesters = _.filter(creepsInRoom, (creep) => creep.memory.role == 'harvester');
         if(harvesters.length < 2) {
-            var newName = spawnsInRoom[0].createCreep([WORK,CARRY,MOVE], undefined, {role: 'harvester'});
+            var newName = spawnsInRoom[0].createCreep([WORK,CARRY,MOVE,CARRY,MOVE], undefined, {role: 'harvester'});
             console.log('Spawning new harvester: ' + newName);
         }
 
@@ -61,14 +61,14 @@ module.exports.loop = function () {
 
         var upgraders = _.sum(creepsInRoom, (creep) => creep.memory.role == 'upgrader');
         if(upgraders < 3) {
-            var newName = spawnsInRoom[0].createCreep([WORK,CARRY,MOVE], undefined, {role: 'upgrader'});
+            var newName = spawnsInRoom[0].createCreep([WORK,CARRY,MOVE,CARRY,MOVE], undefined, {role: 'upgrader'});
             console.log('Spawning new upgrader: ' + newName);
         }
 
         if (room.find(FIND_CONSTRUCTION_SITES).length > 0) {
             var builders = _.sum(creepsInRoom, (creep) => creep.memory.role === 'builder');
             if (builders.length < 2) {
-                var newName = spawnsInRoom[0].createCreep([WORK,CARRY,MOVE], undefined, {role: 'builder'});
+                var newName = spawnsInRoom[0].createCreep([WORK,CARRY,MOVE,CARRY,MOVE], undefined, {role: 'builder'});
                 console.log('Spawning new builder: ' + newName);
             }
         }
