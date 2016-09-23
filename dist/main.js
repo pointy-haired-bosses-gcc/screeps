@@ -1,6 +1,7 @@
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
+var roleTransporter = require('role.transporter');
 
 module.exports.loop = function () {
 
@@ -47,16 +48,18 @@ module.exports.loop = function () {
         }
         
         var harvesters = _.filter(creepsInRoom, (creep) => creep.memory.role == 'harvester');
-        console.log('Harvesters: ' + harvesters.length);
-
         if(harvesters.length < 2) {
             var newName = spawnsInRoom[0].createCreep([WORK,CARRY,MOVE], undefined, {role: 'harvester'});
             console.log('Spawning new harvester: ' + newName);
         }
 
-        var upgraders = _.sum(creepsInRoom, (creep) => creep.memory.role == 'upgrader');
-        console.log('Upgraders: ' + upgraders);
+        var transporters = _.sum(creepsInRoom, (creep) => creep.memory.role == 'transporter');
+        if (transporters.length < 2) {
+            var newName = spawnsInRoom[0].createCrep([WORK,CARRY,CARRY,MOVE,MOVE], undefined, {role: 'transporter'});
+            console.log('Spawning new transporter: ' + newName);
+        }
 
+        var upgraders = _.sum(creepsInRoom, (creep) => creep.memory.role == 'upgrader');
         if(upgraders < 3) {
             var newName = spawnsInRoom[0].createCreep([WORK,CARRY,MOVE], undefined, {role: 'upgrader'});
             console.log('Spawning new upgrader: ' + newName);
@@ -95,6 +98,9 @@ module.exports.loop = function () {
             }
             if(creep.memory.role == 'builder') {
                 roleBuilder.run(creep);
+            }
+            if(creep.memory.role == 'transporter') {
+                roleTransporter.run(creep);
             }
         }
     }
