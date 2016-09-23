@@ -20,6 +20,31 @@ module.exports.loop = function () {
                 return object.structureType == STRUCTURE_SPAWN;
             }
         });
+        var towersInRoom = room.find(FIND_STRUCTURES, {
+            filter: function(object) {
+                return object.structureType == STRUCTURE_TOWER;
+            }
+        });
+
+        for (var t in towersInRoom) {
+            var tower = towersInRoom[t];
+
+            var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+            if (closestHostile) {
+                tower.attack(closestHostile);
+            }
+
+            if (tower.energy >= tower.energyMax * .5) {
+                var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES,
+                    { filter: function(o) {
+                        return o.hits < o.hitsMax && o.hits <= 5000;
+                    }}
+                );
+                if (closestDamagedStructure) {
+                    tower.repair(closestDamagedStructure);
+                }
+            }
+        }
         
         var harvesters = _.filter(creepsInRoom, (creep) => creep.memory.role == 'harvester');
         console.log('Harvesters: ' + harvesters.length);
