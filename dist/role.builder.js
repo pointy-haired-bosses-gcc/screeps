@@ -3,20 +3,27 @@ var roleBuilder = {
     /** @param {Creep} creep **/
     run: function(creep) {
 
-        if(creep.memory.building && creep.carry.energy == 0) {
-            creep.memory.building = false;
+        if(creep.memory.working && creep.carry.energy == 0) {
+            creep.memory.working = false;
             creep.say('harvesting');
         }
-        if(!creep.memory.building && creep.carry.energy == creep.carryCapacity) {
-            creep.memory.building = true;
-            creep.say('building');
+        if(!creep.memory.working && creep.carry.energy == creep.carryCapacity) {
+            creep.memory.working = true;
+            creep.say('working');
         }
 
-        if(creep.memory.building) {
-            var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
-            if(targets.length) {
-                if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0]);
+        if(creep.memory.working) {
+            var constructionTargets = creep.room.find(FIND_CONSTRUCTION_SITES);
+            if(constructionTargets.length) {
+                if(creep.build(constructionTargets[0]) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(constructionTargets[0]);
+                }
+            }
+            else
+            {
+                var repairTargets = creep.room.find(FIND_STRUCTURES, { filter: function(s) { return s.hits < s.hitsMax && s.hits < 100000; }});
+                if(creep.repair(repairTargets[0]) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(repairTargets[0]);
                 }
             }
         }
