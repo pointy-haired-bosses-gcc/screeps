@@ -28,9 +28,14 @@ var roleBuilder = {
             }
         }
         else {
-            var sources = creep.room.find(FIND_SOURCES);
-            if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[0]);
+            var target = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+                    filter: function(structure) {
+                        return structure.structureType == STRUCTURE_CONTAINER
+                            && structure.store[RESOURCE_ENERGY] > 0;
+                    }
+            });
+            if(creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(target);
             }
         }
     }
