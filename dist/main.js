@@ -49,7 +49,7 @@ module.exports.loop = function () {
         
         var harvesters = _.filter(creepsInRoom, (creep) => creep.memory.role == 'harvester');
         if(harvesters.length < 2) {
-            var newName = spawnsInRoom[0].createCreep([WORK,CARRY,MOVE,CARRY,MOVE], undefined, {role: 'harvester'});
+            var newName = spawnsInRoom[0].createCreep([WORK,WORK,CARRY,CARRY,MOVE], undefined, {role: 'harvester'});
             console.log('Spawning new harvester: ' + newName);
         }
 
