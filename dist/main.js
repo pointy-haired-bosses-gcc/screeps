@@ -37,6 +37,14 @@ module.exports.loop = function () {
             console.log('Spawning new upgrader: ' + newName);
         }
 
+        if (room.find(FIND_CONSTRUCTION_SITES).length > 0) {
+            var builders = _.sum(creepsInRoom, (creep) => creep.memory.role === 'builder');
+            if (builders.length < 2) {
+                var newName = spawnsInRoom[0].createCreep([WORK,CARRY,MOVE], undefined, {role: 'builder'});
+                console.log('Spawning new builder: ' + newName);
+            }
+        }
+
         var tower = Game.getObjectById('TOWER_ID');
         if(tower) {
             var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
