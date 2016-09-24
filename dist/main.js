@@ -1,6 +1,7 @@
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
+var roleRepairer = require('role.repairer');
 var roleTransporter = require('role.transporter');
 
 module.exports.loop = function () {
@@ -73,6 +74,12 @@ module.exports.loop = function () {
                 var newName = spawnsInRoom[0].createCreep([WORK,CARRY,MOVE,CARRY,MOVE], undefined, {role: 'builder'});
                 if (_.isString(newName)) console.log('Spawning new builder: ' + newName);
             }
+
+            var repairers = _.sum(creepsInRoom, (creep) => creep.memory.role == 'repairer');
+            if (repairers < 1) {
+                var newName = spawnsInRoom[0].createCreep([WORK,CARRY,MOVE,CARRY,MOVE], undefined, {role: 'repairer'});
+                if (_.isString(newName)) console.log('Spawning new repairer: ' + newName);
+            }
         }
 
         var tower = Game.getObjectById('TOWER_ID');
@@ -100,6 +107,9 @@ module.exports.loop = function () {
             }
             if(creep.memory.role == 'builder') {
                 roleBuilder.run(creep);
+            }
+            if(creep.memory.role == 'repairer') {
+                roleRepairer.run(creep);
             }
             if(creep.memory.role == 'transporter') {
                 roleTransporter.run(creep);
