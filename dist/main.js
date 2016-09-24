@@ -47,17 +47,17 @@ module.exports.loop = function () {
             }
         }
         
-        var harvesters = _.filter(creepsInRoom, (creep) => creep.memory.role == 'harvester');
+        var harvesters = _.sum(creepsInRoom, (creep) => creep.memory.role == 'harvester');
         var transporters = _.sum(creepsInRoom, (creep) => creep.memory.role == 'transporter');
-        if(harvesters.length < 1) {
+        if(harvesters < 1) {
             var newName = spawnsInRoom[0].createCreep([WORK,CARRY,MOVE], undefined, {role: 'harvester'});
             console.log('Spawning new harvester: ' + newName);
         }
-        else if (transporters.length < 2) {
-            var newName = spawnsInRoom[0].createCrep([WORK,CARRY,MOVE], undefined, {role: 'transporter'});
+        else if (transporters < 2) {
+            var newName = spawnsInRoom[0].createCreep([WORK,CARRY,MOVE], undefined, {role: 'transporter'});
             console.log('Spawning new transporter: ' + newName);
         }
-        else if (harvesters.length < 2) {
+        else if (harvesters < 2) {
             var newName = spawnsInRoom[0].createCreep([WORK,WORK,CARRY,MOVE], undefined, {role: 'harvester'});
             console.log('Spawning new harvester: ' + newName);
         }
