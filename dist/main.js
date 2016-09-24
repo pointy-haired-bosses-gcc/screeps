@@ -65,7 +65,7 @@ module.exports.loop = function () {
         else {
             var upgraders = _.sum(creepsInRoom, (creep) => creep.memory.role == 'upgrader');
             if(upgraders < 3) {
-                var newName = spawnsInRoom[0].createCreep([WORK,CARRY,MOVE,CARRY,MOVE], undefined, {role: 'upgrader'});
+                var newName = spawnsInRoom[0].createCreep([WORK,WORK,CARRY,MOVE,CARRY,MOVE], undefined, {role: 'upgrader'});
                 if (_.isString(newName)) console.log('Spawning new upgrader: ' + newName);
             }
 
