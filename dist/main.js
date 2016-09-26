@@ -50,34 +50,35 @@ module.exports.loop = function () {
         
         var harvesters = _.sum(creepsInRoom, (creep) => creep.memory.role == 'harvester');
         var transporters = _.sum(creepsInRoom, (creep) => creep.memory.role == 'transporter');
+        var creepEnergyFactor = ((harvesters + transporters) >= 3) ? room.energyCapacityAvailable : room.energyAvailable;
         if(harvesters < 1) {
-            var newName = spawnsInRoom[0].createCreep([WORK,WORK,WORK,CARRY,MOVE], undefined, {role: 'harvester'});
+            var newName = spawnsInRoom[0].createCreep(roleHarvester.getBuildComponents(creepEnergyFactor), undefined, {role: 'harvester'});
             if (_.isString(newName)) console.log('Spawning new harvester: ' + newName);
         }
         else if (transporters < 2) {
-            var newName = spawnsInRoom[0].createCreep([WORK,CARRY,MOVE], undefined, {role: 'transporter'});
+            var newName = spawnsInRoom[0].createCreep(roleTransporter.getBuildComponents(creepEnergyFactor), undefined, {role: 'transporter'});
             if (_.isString(newName)) console.log('Spawning new transporter: ' + newName);
         }
         else if (harvesters < 2) {
-            var newName = spawnsInRoom[0].createCreep([WORK,WORK,WORK,CARRY,MOVE], undefined, {role: 'harvester'});
+            var newName = spawnsInRoom[0].createCreep(roleHarvester.getBuildComponents(creepEnergyFactor), undefined, {role: 'harvester'});
             if (_.isString(newName)) console.log('Spawning new harvester: ' + newName);
         }
         else {
             var upgraders = _.sum(creepsInRoom, (creep) => creep.memory.role == 'upgrader');
             if(upgraders < 3) {
-                var newName = spawnsInRoom[0].createCreep([WORK,WORK,CARRY,MOVE,CARRY,MOVE], undefined, {role: 'upgrader'});
+                var newName = spawnsInRoom[0].createCreep(roleUpgrader.getBuildComponents(creepEnergyFactor), undefined, {role: 'upgrader'});
                 if (_.isString(newName)) console.log('Spawning new upgrader: ' + newName);
             }
 
             var builders = _.sum(creepsInRoom, (creep) => creep.memory.role == 'builder');
             if (builders < 2) {
-                var newName = spawnsInRoom[0].createCreep([WORK,CARRY,MOVE,CARRY,MOVE], undefined, {role: 'builder'});
+                var newName = spawnsInRoom[0].createCreep(roleBuilder.getBuildComponents(creepEnergyFactor), undefined, {role: 'builder'});
                 if (_.isString(newName)) console.log('Spawning new builder: ' + newName);
             }
 
             var repairers = _.sum(creepsInRoom, (creep) => creep.memory.role == 'repairer');
             if (repairers < 1) {
-                var newName = spawnsInRoom[0].createCreep([WORK,CARRY,MOVE,CARRY,MOVE], undefined, {role: 'repairer'});
+                var newName = spawnsInRoom[0].createCreep(roleRepairer.getBuildComponents(creepEnergyFactor), undefined, {role: 'repairer'});
                 if (_.isString(newName)) console.log('Spawning new repairer: ' + newName);
             }
         }

@@ -46,6 +46,23 @@ var roleRepairer = {
                 }
             }
         }
+    },
+    getBuildComponents: function(roomEnergy) {
+        if (roomEnergy >= 1300) {
+            return [WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE];
+        }
+        else if (roomEnergy >= 1050) {
+            return [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE];
+        }
+        else if (roomEnergy >= 800) {
+            return [WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE];
+        }
+        else if (roomEnergy >= 550) {
+            return [WORK,WORK,CARRY,MOVE,MOVE];
+        }
+        else if (roomEnergy >= 300) {
+            return [WORK,CARRY,MOVE];
+        }
     }
 };
 

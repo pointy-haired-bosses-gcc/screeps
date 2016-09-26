@@ -36,6 +36,17 @@ var roleTransporter = {
                 }
             }
         }
+    },
+    getBuildComponents: function(roomEnergy) {
+        if (roomEnergy >= 1300) {
+            return [WORK,CARRY,CARRY,CARRY,MOVE,MOVE];
+        }
+        else if (roomEnergy >= 800) {
+            return [WORK,CARRY,CARRY,MOVE,MOVE];
+        }
+        else if (roomEnergy >= 300) {
+            return [WORK,CARRY,MOVE];
+        }
     }
 };
 
