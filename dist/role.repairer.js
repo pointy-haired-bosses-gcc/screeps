@@ -13,7 +13,7 @@ var roleRepairer = {
         }
 
         if(creep.memory.working) {
-            var repairTargets = creep.room.find(FIND_STRUCTURES, { filter: function(s) { return s.hits < s.hitsMax && s.hits < 100000; }});
+            var repairTargets = creep.room.find(FIND_STRUCTURES, { filter: function(s) { return s.hits < s.hitsMax && s.hits < 250000; }});
             if(repairTargets.length) {
                 if(creep.repair(repairTargets[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(repairTargets[0]);
