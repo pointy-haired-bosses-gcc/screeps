@@ -52,7 +52,7 @@ module.exports.loop = function () {
         var transporters = _.sum(creepsInRoom, (creep) => creep.memory.role == 'transporter');
         var creepEnergyFactor = ((harvesters + transporters) >= 3) ? room.energyCapacityAvailable : room.energyAvailable;
         if(harvesters < 1) {
-            var newName = spawnsInRoom[0].createCreep(roleHarvester.getBuildComponents(creepEnergyFactor), undefined, {role: 'harvester'});
+            var newName = spawnsInRoom[0].createCreep(roleHarvester.getBuildComponents(creepEnergyFactor), undefined, {role: 'harvester', assignedSource: assignSource(room)});
             if (_.isString(newName)) console.log('Spawning new harvester: ' + newName);
         }
         else if (transporters < 2) {
@@ -60,7 +60,7 @@ module.exports.loop = function () {
             if (_.isString(newName)) console.log('Spawning new transporter: ' + newName);
         }
         else if (harvesters < 2) {
-            var newName = spawnsInRoom[0].createCreep(roleHarvester.getBuildComponents(creepEnergyFactor), undefined, {role: 'harvester'});
+            var newName = spawnsInRoom[0].createCreep(roleHarvester.getBuildComponents(creepEnergyFactor), undefined, {role: 'harvester', assignedSource: assignSource(room)});
             if (_.isString(newName)) console.log('Spawning new harvester: ' + newName);
         }
         else {
@@ -117,4 +117,11 @@ module.exports.loop = function () {
             }
         }
     }
+}
+
+function assignSource(room) {
+    var sources = room.find(FIND_SOURCES);
+    var idx = Math.floor(Math.random() * sources.length);
+
+    return sources[idx].id;
 }
