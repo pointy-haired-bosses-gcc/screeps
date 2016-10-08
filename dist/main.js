@@ -32,7 +32,7 @@ module.exports.loop = function () {
             var tower = towersInRoom[t];
 
             var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-            if (closestHostile) {
+            if (closestHostile && closestHostile.owner.username != 'Bovius') {
                 tower.attack(closestHostile);
             }
 
